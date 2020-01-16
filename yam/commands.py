@@ -93,6 +93,13 @@ def start_correlate(io,
     tasks = _todo_tasks(tasks, done_tasks)
     tasks = [UTC(t) for t in tasks]
     kwargs.update({'keep_correlations': keep_correlations, 'stack': stack})
+
+    
+    dir_corr = 'correlation'
+    if os.path.exists(dir_corr):
+        shutil.rmtree(dir_corr)
+    os.makedirs(dir_corr)
+    
     if parallel_inner_loop:
         kwargs['njobs'] = njobs
         njobs = 1
@@ -101,13 +108,14 @@ def start_correlate(io,
         log.info('do work sequentially')
         for task in tqdm.tqdm(tasks, total=len(tasks)):
             result = do_work(task)
-            _write_corr(result, io, **dataset_kwargs)
+            # _write_corr(result, io, **dataset_kwargs)
     else:
         pool = multiprocessing.Pool(njobs)
         log.info('do work parallel (%d cores)', pool._processes)
         for result in tqdm.tqdm(pool.imap_unordered(do_work, tasks),
                                 total=len(tasks)):
-            _write_corr(result, io, **dataset_kwargs)
+            continue
+            # _write_corr(result, io, **dataset_kwargs)
         pool.close()
         pool.join()
 

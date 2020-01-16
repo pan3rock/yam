@@ -4,6 +4,7 @@ from functools import partial
 import itertools
 import logging
 import multiprocessing
+import os
 
 import numpy as np
 from numpy.fft import rfft, irfft, rfftfreq
@@ -684,9 +685,15 @@ def correlate(io, day, outkey,
     xstream = Stream()
     xstream.traces = [tr for s_ in streams for tr in s_]
     if len(xstream) > 0:
-        res = {}
-        if keep_correlations:
-            res['corr'] = xstream
+        # res = {}
+        # if keep_correlations:
+        #     res['corr'] = xstream
+        # if stack:
+        #     res['stack'] = yam.stack.stack(xstream, stack)
+        # return res
         if stack:
-            res['stack'] = yam.stack.stack(xstream, stack)
-        return res
+            stack2 = yam.stack.stack(xstream, stack)
+        dir_corr = 'correlation'
+        fname = day.strftime('%Y-%m-%d') + '.h5'
+        stack2.write(os.path.join(dir_corr, fname), 'H5', dtype='float16')
+        return True
