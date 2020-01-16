@@ -649,11 +649,13 @@ def correlate(io, day, outkey,
         datetime2 = _midtime(stream2[0].stats)
         msg = 'Cannot get coordinates for channel %s datetime %s'
         try:
-            c1 = inventory.get_coordinates(stream1[0].id, datetime=datetime1)
+            # c1 = inventory.get_coordinates(stream1[0].id, datetime=datetime1)
+            c1 = inventory.get_coordinates(stream1[0].id)
         except Exception as ex:
             raise RuntimeError(msg % (stream1[0].id, datetime1)) from ex
         try:
-            c2 = inventory.get_coordinates(stream2[0].id, datetime=datetime2)
+            # c2 = inventory.get_coordinates(stream2[0].id, datetime=datetime2)
+            c2 = inventory.get_coordinates(stream2[0].id)
         except Exception as ex:
             raise RuntimeError(msg % (stream2[0].id, datetime2)) from ex
         args = (c1['latitude'], c1['longitude'],
