@@ -27,8 +27,6 @@ from yam.util import _analyze_key, _filter, _get_fname, IterTime, ParseError
 log = logging.getLogger('yam.commands')
 
 
-
-
 def _todo_tasks(tasks, done_tasks):
     if len(tasks) == 0:
         log.warning('no tasks found -> nothing to do')
@@ -94,12 +92,11 @@ def start_correlate(io,
     tasks = [UTC(t) for t in tasks]
     kwargs.update({'keep_correlations': keep_correlations, 'stack': stack})
 
-    
     dir_corr = 'correlation'
     if os.path.exists(dir_corr):
         shutil.rmtree(dir_corr)
     os.makedirs(dir_corr)
-    
+
     if parallel_inner_loop:
         kwargs['njobs'] = njobs
         njobs = 1

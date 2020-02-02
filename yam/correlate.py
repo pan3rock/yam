@@ -358,7 +358,7 @@ def _prep1(target_sr, tolerance_shift, interpolate_options,
     if remove_response:
         tr.remove_response(inventory, **remove_response_options)
     if demean:
-         tr.detrend('demean')
+        tr.detrend('demean')
     if filter is not None:
         _filter(tr, filter)
     return tr
@@ -394,7 +394,7 @@ def preprocess(stream, day=None, inventory=None,
                spectral_whitening_options=None,
                downsample=None, tolerance_shift=None, interpolate_options=None,
                decimate=None,
-               njobs=1):
+               njobs=1, **kwargs):
     """
     Preprocess stream of 1 day
 
